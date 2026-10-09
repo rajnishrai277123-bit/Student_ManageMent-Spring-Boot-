@@ -3,6 +3,7 @@ package student_management.dto;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 public class StudentRequest {
 
@@ -16,8 +17,8 @@ public class StudentRequest {
     @Min(value = 1, message = "Age must be greater than 0")
     private int age;
 
-    @NotBlank(message = "Course is required")
-    private String course;
+    @NotNull(message = "Course ID is required")
+    private Long courseId;
 
     public StudentRequest() {
     }
@@ -46,11 +47,11 @@ public class StudentRequest {
         this.age = age;
     }
 
-    public String getCourse() {
-        return course;
+    public Long getCourseId() {
+        return courseId;
     }
 
-    public void setCourse(String course) {
-        this.course = course;
+    public void setCourseId(Long courseId) {
+        this.courseId = courseId;
     }
 }

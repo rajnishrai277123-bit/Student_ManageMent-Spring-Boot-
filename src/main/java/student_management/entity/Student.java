@@ -1,9 +1,6 @@
 package student_management.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 @Entity
 public class Student {
@@ -13,9 +10,14 @@ public class Student {
     private Long id;
 
     private String name;
+    @Column(nullable = false, unique = true)
     private String email;
+
     private int age;
-    private String course;
+
+    @ManyToOne
+    @JoinColumn(name = "course_id")
+    private Course course;
 
     public Student() {
     }
@@ -52,11 +54,11 @@ public class Student {
         this.age = age;
     }
 
-    public String getCourse() {
+    public Course getCourse() {
         return course;
     }
 
-    public void setCourse(String course) {
+    public void setCourse(Course course) {
         this.course = course;
     }
 }

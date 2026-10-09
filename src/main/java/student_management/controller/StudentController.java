@@ -5,6 +5,8 @@ import org.springframework.web.bind.annotation.*;
 import student_management.dto.StudentRequest;
 import student_management.entity.Student;
 import student_management.service.StudentService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
@@ -19,23 +21,21 @@ public class StudentController {
     }
 
 
-
     @GetMapping
-    public List<Student> getAllStudents() {
-        return studentService.getAllStudents();
+    public Page<Student> getAllStudents(Pageable pageable) {
+        return studentService.getStudentsWithPagination(pageable);
     }
 
     @GetMapping("{id}")
     public Student getStudentById(@PathVariable Long id) {
         return studentService.getStudentById(id);
     }
-
     @PutMapping("/{id}")
     public Student updateStudent(
             @PathVariable Long id,
-            @RequestBody Student student) {
+            @Valid @RequestBody StudentRequest studentRequest) {
 
-        return studentService.updateStudent(id, student);
+        return studentService.updateStudent(id, studentRequest);
     }
 
     @DeleteMapping("{id}")
@@ -47,6 +47,11 @@ public class StudentController {
     @GetMapping("/search")
     public List<Student> searchStudents(@RequestParam String name) {
         return studentService.searchStudentsByName(name);
+    }
+
+    @GetMapping("/older-than")
+    public List<Student> getStudentsOlderThan(@RequestParam int age) {
+        return studentService.getStudentsOlderThan(age);
     }
 
     @PostMapping
